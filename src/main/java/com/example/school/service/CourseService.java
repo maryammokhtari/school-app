@@ -22,8 +22,8 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-   public Course getById(Long id) {
-        return courseRepository.getById(id);
+   public Course findById(Long id) {
+        return courseRepository.findById(id).get();
     }
 
     public Course create(Course course) {

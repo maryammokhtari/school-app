@@ -28,7 +28,7 @@ public class CourseController {
     @GetMapping("/{id}")
     public ResponseEntity<Course> getById(@PathVariable Long id){
         //@pathVaribale یعنی در ادرس ورودی باید یه مولفه ی عددی از حنس لانگ باشه
-        return ResponseEntity.ok(courseService.getById(id));
+        return ResponseEntity.ok(courseService.findById(id));
         //responseEntity.okیعنی  کد200 برگردون و در بدنه اش اونی که داخله پرانتزه رو بذار
     }
     @PostMapping

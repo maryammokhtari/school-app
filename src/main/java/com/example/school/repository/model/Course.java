@@ -3,11 +3,15 @@ package com.example.school.repository.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data//baraye ine ke lombok khodesh getter,setter dorost kone va ma dige nanevisim
 @Entity// برای اینه که بگیم موارد زیر رو در دیتابیس به صورت یه جدول دربیاره
+@AllArgsConstructor
+@NoArgsConstructor
 public class Course {
 
     @Id
