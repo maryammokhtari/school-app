@@ -18,8 +18,8 @@ public class TeacherServiceImp implements TeacherService {
     }
 
     @Override
-    public Teacher getById(Long id) {
-        return teacherRepository.getById(id);
+    public Teacher findById(Long id) {
+        return teacherRepository.findById(id).get();
     }
 
     @Override

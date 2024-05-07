@@ -22,8 +22,8 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Student getById(Long id) {
-        return studentRepository.getById(id);
+    public Student findById(Long id) {
+        return studentRepository.findById(id).get();
     }
 
     public Student create(Student student) {

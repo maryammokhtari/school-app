@@ -22,7 +22,7 @@ public class TeacherController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Teacher> getById(@PathVariable Long id) {
-        return ResponseEntity.ok(teacherService.getById(id));
+        return ResponseEntity.ok(teacherService.findById(id));
     }
 
     @PostMapping

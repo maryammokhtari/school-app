@@ -4,7 +4,6 @@ import com.example.school.repository.model.Student;
 import com.example.school.service.StudentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +28,7 @@ public class StudentController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<Student> getById(@PathVariable Long id){
-        return ResponseEntity.ok(studentService.getById(id));
+        return ResponseEntity.ok(studentService.findById(id));
     }
     @PostMapping
     public ResponseEntity<Student> create (@RequestBody @Valid Student student){
