@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.contentOf;
 
 @DataJpaTest
 public class CourseRepositoryTest {
@@ -61,9 +60,10 @@ public class CourseRepositoryTest {
 
 
     }
+
     @Test
     @DisplayName("junit test for get course by id operation")
-    void testGetByIdCourse(){
+    void testGetByIdCourse() {
         //give:setup object or precondition
         courseRepository.save(course);
         //when:action that we are going to test
@@ -73,23 +73,25 @@ public class CourseRepositoryTest {
 
 
     }
+
     @Test
     @DisplayName("junit test for update course operation")
-    void testUpdateCourse(){
+    void testUpdateCourse() {
         //given:setup object or precondition
         courseRepository.save(course);
         //when:action that we are going to test
-        Course getCourse=courseRepository.findById(course.getId()).get();
+        Course getCourse = courseRepository.findById(course.getId()).get();
         getCourse.setName("dini");
         getCourse.setCapacity(90);
-        Course updatedCourse= courseRepository.save(getCourse);
+        Course updatedCourse = courseRepository.save(getCourse);
         //then: verify the output or expected result
         assertThat(updatedCourse).isNotNull();
         assertThat(updatedCourse.getName()).isEqualTo("dini");
     }
+
     @Test
-    @DisplayName("juni test for delete course operation")
-    void testDeleteCourse(){
+    @DisplayName("junit test for delete course operation")
+    void testDeleteCourse() {
         //given: setup object or precondition
         courseRepository.save(course);
         //when: action or behavior that we are going to test
@@ -98,7 +100,6 @@ public class CourseRepositoryTest {
         //then:verify the output or expected result
         assertThat(result).isEmpty();
     }
-
 
 
 }
