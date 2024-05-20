@@ -3,6 +3,7 @@ package com.example.school.service;
 import com.example.school.repository.StudentRepository;
 import com.example.school.repository.model.Student;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -30,11 +31,16 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
+    @SneakyThrows
     public Student update(Student student) {
+        if(!studentRepository.existsById(student.getId()))
+            throw new Exception("student doesn't exist");
         return studentRepository.save(student);
     }
-
+    @SneakyThrows
     public void delete(Long id) {
+        if(!studentRepository.existsById(id))
+            throw new Exception("student doesn't exist");
         studentRepository.deleteById(id);
     }
 
