@@ -62,7 +62,7 @@ public class StudentIT {
     @Test
     void updateTest(){
         webTestClient.put()
-                .uri(path)
+                .uri(path+"/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(student),Student.class)
                 .exchange()
@@ -70,9 +70,8 @@ public class StudentIT {
     }
     @Test
     void updateTest_throwsExceptions(){
-        student.setId(110L);
         webTestClient.put()
-                .uri(path)
+                .uri(path+"/100")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(student),Student.class)
                 .exchange()

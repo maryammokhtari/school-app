@@ -79,7 +79,7 @@ public class CourseIT {
     void updateTest_InvalidValue_throwsExceptions(){
         courseRequest.setCapacity(1);
         webTestClient.put()
-                .uri(path)
+                .uri(path+"/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(courseRequest), CourseRequest.class)
                 .exchange()

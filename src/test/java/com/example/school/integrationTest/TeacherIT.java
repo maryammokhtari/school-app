@@ -64,7 +64,7 @@ public class TeacherIT {
     @Test
     void updateTeacherTest() {
         webTestClient.put()
-                .uri(path)
+                .uri(path+"/1")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(teacher), Teacher.class)
                 .exchange()
@@ -73,9 +73,8 @@ public class TeacherIT {
 
     @Test
     void updateTeacherTest_ThrowsExceptin() {
-        teacher.setId(100L);
         webTestClient.put()
-                .uri(path)
+                .uri(path+"/110")
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(Mono.just(teacher), Teacher.class)
                 .exchange()
