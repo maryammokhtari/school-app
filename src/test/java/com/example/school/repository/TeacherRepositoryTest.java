@@ -1,6 +1,6 @@
 package com.example.school.repository;
 
-import com.example.school.repository.model.Teacher;
+import com.example.school.repository.entity.Teacher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,8 @@ public class TeacherRepositoryTest {
     @Test
     @DisplayName("junit test for get teacher list")
     void testgetAllTeachers() {
-        //given:
+        //the setup is already done by h2database(check data.sql)
+ /*       //given:
         Teacher teacher1 = Teacher.builder()
                 .firstName("hami")
                 .lastName("rahmani")
@@ -55,7 +56,7 @@ public class TeacherRepositoryTest {
                 .salary(900.0)
                 .build();
         teacherRepository.save(teacher1);
-        teacherRepository.save(teacher2);
+        teacherRepository.save(teacher2);*/
         //when
         List<Teacher> teachers = teacherRepository.findAll();
         //then

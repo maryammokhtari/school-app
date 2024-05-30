@@ -1,6 +1,6 @@
 package com.example.school.integrationTest;
 
-import com.example.school.repository.model.Student;
+import com.example.school.repository.entity.Student;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

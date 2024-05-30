@@ -1,12 +1,8 @@
 package com.example.school.repository;
 
-import com.example.school.repository.model.Student;
-import com.example.school.repository.model.Teacher;
+import com.example.school.repository.entity.Teacher;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public interface TeacherRepository extends JpaRepository<Teacher,Long> {}

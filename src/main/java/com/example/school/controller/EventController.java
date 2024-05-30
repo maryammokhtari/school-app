@@ -1,6 +1,6 @@
 package com.example.school.controller;
 
-import com.example.school.repository.model.Event;
+import com.example.school.repository.entity.Event;
 import com.example.school.service.EventService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

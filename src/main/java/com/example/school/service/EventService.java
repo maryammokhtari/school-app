@@ -1,7 +1,7 @@
 package com.example.school.service;
 
 import com.example.school.repository.EventRepository;
-import com.example.school.repository.model.Event;
+import com.example.school.repository.entity.Event;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

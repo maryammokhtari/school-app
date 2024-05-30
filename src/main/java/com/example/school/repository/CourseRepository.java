@@ -1,12 +1,8 @@
 package com.example.school.repository;
 
-import com.example.school.repository.model.Course;
-import org.hibernate.type.descriptor.converter.spi.JpaAttributeConverter;
+import com.example.school.repository.entity.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Repository
 public interface CourseRepository extends JpaRepository<Course,Long> {}

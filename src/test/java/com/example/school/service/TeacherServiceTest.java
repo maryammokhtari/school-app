@@ -1,7 +1,9 @@
 package com.example.school.service;
 
 import com.example.school.repository.TeacherRepository;
-import com.example.school.repository.model.Teacher;
+import com.example.school.repository.entity.Teacher;
+import com.example.school.service.dto.TeacherRequest;
+import com.example.school.service.mapper.TeacherMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -22,33 +25,56 @@ public class TeacherServiceTest {
 
     @Mock
     TeacherRepository teacherRepository;
+    @Mock
+    TeacherMapper teacherMapper;
     @InjectMocks
-    TeacherService teacherService;
+    TeacherServiceImp teacherService;
 
     Teacher teacher;
+    TeacherRequest teacherRequest;
 
     @BeforeEach
     void setUp() {
         teacher = new Teacher(1L, "maryam", "mokhtari", 500.00);
+        teacherRequest = new TeacherRequest("maryam", "mokhtari", 500.00);
     }
 
     @Test
     void testCreateTeacher() {
-        teacherService.create(teacher);
+        when(teacherMapper.teacherRequestToTeacher(teacherRequest)).thenReturn(teacher);
+
+        teacherService.create(teacherRequest);
         verify(teacherRepository, times(1)).save(teacher);
     }
 
     @Test
     void testDeleteTeacher() {
+        when(teacherRepository.existsById(teacher.getId())).thenReturn(true);
         teacherService.delete(teacher.getId());
         verify(teacherRepository, times(1)).deleteById(teacher.getId());
+
+    }
+    @Test
+    void testDeleteTeacher_ThrowException() {
+        when(teacherRepository.existsById(teacher.getId())).thenReturn(false);
+        assertThrows(Exception.class,()->teacherService.delete(teacher.getId()));
+        verify(teacherRepository, times(0)).deleteById(teacher.getId());
 
     }
 
     @Test
     void testUpdateTeacher() {
-        teacherService.update(teacher);
+        when(teacherMapper.teacherUpdateRequestToTeacher(teacherRequest,teacher.getId())).thenReturn(teacher);
+         when(teacherRepository.existsById(teacher.getId())).thenReturn(true);
+        teacherService.update(teacher.getId(), teacherRequest);
         verify(teacherRepository, times(1)).save(teacher);
+    }
+    @Test
+    void testUpdateTeacher_ThrowsException() {
+        when(teacherRepository.existsById(teacher.getId())).thenReturn(false);
+        assertThrows(Exception.class,()->
+                teacherService.update(teacher.getId(), teacherRequest));
+        verify(teacherRepository, times(0)).save(teacher);
     }
 
     @Test
@@ -67,11 +93,11 @@ public class TeacherServiceTest {
     }
 
     @Test
-    void testGetById(){
+    void testGetById() {
         when(teacherRepository.findById(teacher.getId())).thenReturn(Optional.ofNullable(teacher));
         Teacher result = teacherService.findById(teacher.getId());
-        assertEquals(result.getFirstName(),teacher.getFirstName());
-        verify(teacherRepository,times(1)).findById(teacher.getId());
+        assertEquals(result.getFirstName(), teacher.getFirstName());
+        verify(teacherRepository, times(1)).findById(teacher.getId());
     }
 
 }

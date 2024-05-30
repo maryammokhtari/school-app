@@ -1,7 +1,8 @@
 package com.example.school.controller;
 
-import com.example.school.repository.model.Student;
+import com.example.school.repository.entity.Student;
 import com.example.school.service.StudentService;
+import com.example.school.service.dto.StudentRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -31,17 +32,18 @@ public class StudentController {
         return ResponseEntity.ok(studentService.findById(id));
     }
     @PostMapping
-    public ResponseEntity<Student> create (@RequestBody @Valid Student student){
-        return ResponseEntity.ok(studentService.create(student));
+    public ResponseEntity<Student> create (@RequestBody @Valid StudentRequest studentRequest){
+        return ResponseEntity.ok(studentService.create(studentRequest));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity deleteById(@PathVariable Long id){
         studentService.delete(id);
         return ResponseEntity.ok().build();
     }
-    @PutMapping
-    public ResponseEntity<Student>update(@RequestBody @Valid Student student){
-        return ResponseEntity.ok(studentService.update(student));
+    @PutMapping("/{id}")
+    public ResponseEntity<Student>update(@PathVariable Long id , @RequestBody @Valid StudentRequest studentRequest){
+        Student updateStudent=studentService.update(id, studentRequest);
+        return ResponseEntity.ok(updateStudent);
     }
 
 }

@@ -1,6 +1,6 @@
 package com.example.school.repository;
 
-import com.example.school.repository.model.Student;
+import com.example.school.repository.entity.Student;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,8 @@ public class StudentRepositoryTest {
     @Test
     @DisplayName("junit test for get student list")
     void testGetAllStudent() {
-        //given:setup object or precondition
+        //the setup is already done by h2database(check data.sql)
+      /*  //given:setup object or precondition
         Student student2 = Student.builder()
                 .firstName("hami")
                 .lastName("rahmani")
@@ -55,7 +56,7 @@ public class StudentRepositoryTest {
                 .city("tehran")
                 .build();
         studentRepository.save(student2);
-        studentRepository.save(student3);
+        studentRepository.save(student3);*/
         //when: action that we are going test
         List<Student> students = studentRepository.findAll();
         //then: verify the output

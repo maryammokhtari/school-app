@@ -1,4 +1,4 @@
-package com.example.school.repository.model;
+package com.example.school.repository.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.apache.logging.log4j.CloseableThreadContext;
+
 @Data
 @Entity
 @AllArgsConstructor

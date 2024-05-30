@@ -1,6 +1,6 @@
 package com.example.school.integrationTest;
 
-import com.example.school.repository.model.Course;
+import com.example.school.service.dto.CourseRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +14,10 @@ public class CourseIT {
     @Autowired
     private WebTestClient webTestClient;
     String path = "/api/v1/courses";
-    Course course;
+    CourseRequest courseRequest;
     @BeforeEach
     void setUp() {
-        course = new Course(1L, "math", 10);
+        courseRequest = new CourseRequest( "math", 10);
     }
 
     @Test
@@ -41,18 +41,18 @@ public class CourseIT {
         webTestClient.post()
                 .uri(path)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(course), Course.class)
+                .body(Mono.just(courseRequest), CourseRequest.class)
                 .exchange()
                 .expectStatus().isOk()
                 .expectBody().jsonPath("$.id").isNotEmpty();
     }
     @Test
     void createTest_throwsException(){
-        course.setCapacity(1);
+        courseRequest.setCapacity(1);
         webTestClient.post()
                 .uri(path)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(course), Course.class)
+                .body(Mono.just(courseRequest), CourseRequest.class)
                 .exchange()
                 .expectStatus().isBadRequest();
 
@@ -60,29 +60,28 @@ public class CourseIT {
     @Test
     void updateTest(){
         webTestClient.put()
-                .uri(path)
+                .uri(path +"/1")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(course), Course.class)
+                .body(Mono.just(courseRequest), CourseRequest.class)
                 .exchange()
                 .expectStatus().isOk();
     }
     @Test
-    void updateTest_throwsExceptions(){
-        course.setId(100L);
+    void updateTest_InvalidId_throwsExceptions(){
         webTestClient.put()
-                .uri(path)
+                .uri(path+"/100")
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(course), Course.class)
+                .body(Mono.just(courseRequest), CourseRequest.class)
                 .exchange()
                 .expectStatus().is5xxServerError();
     }
     @Test
-    void updateTest_throwsExceptions2(){
-        course.setCapacity(1);
+    void updateTest_InvalidValue_throwsExceptions(){
+        courseRequest.setCapacity(1);
         webTestClient.put()
                 .uri(path)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body(Mono.just(course), Course.class)
+                .body(Mono.just(courseRequest), CourseRequest.class)
                 .exchange()
                 .expectStatus().isBadRequest();
     }

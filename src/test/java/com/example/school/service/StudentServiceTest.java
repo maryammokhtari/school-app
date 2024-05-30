@@ -1,7 +1,9 @@
 package com.example.school.service;
 
 import com.example.school.repository.StudentRepository;
-import com.example.school.repository.model.Student;
+import com.example.school.repository.entity.Student;
+import com.example.school.service.dto.StudentRequest;
+import com.example.school.service.mapper.StudentMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -23,30 +26,51 @@ public class StudentServiceTest {
     StudentRepository studentRepository;
     @InjectMocks
     StudentService studentService;
+    @Mock
+    StudentMapper studentMapper;
 
     Student student;
+    StudentRequest studentRequest;
 
     @BeforeEach
     void setUp() {
         student = new Student(1L, "maryam", "mokhtarifar", "tehran");
+        studentRequest = new StudentRequest("maryam", "mokhtarifar", "tehran");
     }
 
     @Test
     void testCreateStudent() {
-        studentService.create(student);
+        when(studentMapper.studentRequestToStudent(studentRequest)).thenReturn(student);
+
+        studentService.create(studentRequest);
         verify(studentRepository, times(1)).save(student);
     }
 
     @Test
     void testDeleteStudent() {
+        when(studentRepository.existsById(student.getId())).thenReturn(true);
         studentService.delete(student.getId());
         verify(studentRepository, times(1)).deleteById(student.getId());
+    }
+    @Test
+    void testDeleteStudent_ThrowsException() {
+        when(studentRepository.existsById(student.getId())).thenReturn(false);
+        assertThrows(Exception.class,()-> studentService.delete(student.getId()));
+        verify(studentRepository, times(0)).deleteById(student.getId());
     }
 
     @Test
     void testUpdateStudent() {
-        studentService.update(student);
+        when(studentMapper.studentUpdateRequestToStudent(studentRequest,student.getId())).thenReturn(student);
+        when(studentRepository.existsById(student.getId())).thenReturn(true);
+        studentService.update(student.getId(), studentRequest);
         verify(studentRepository, times(1)).save(student);
+    }
+ @Test
+    void testUpdateStudent_ThrowsException() {
+        when(studentRepository.existsById(student.getId())).thenReturn(false);
+        assertThrows(Exception.class,()->studentService.update(student.getId(),studentRequest));
+        verify(studentRepository, times(0)).save(student);
     }
 
     @Test

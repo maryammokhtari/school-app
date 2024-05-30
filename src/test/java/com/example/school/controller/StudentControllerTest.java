@@ -1,7 +1,8 @@
 package com.example.school.controller;
 
-import com.example.school.repository.model.Student;
+import com.example.school.repository.entity.Student;
 import com.example.school.service.StudentService;
+import com.example.school.service.dto.StudentRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.hamcrest.Matchers;
@@ -30,11 +31,13 @@ public class StudentControllerTest {
     @Autowired
     MockMvc mockMvc;
     Student student;
+    StudentRequest studentRequest;
     String path = "/api/v1/students";
 
     @BeforeEach
     void setUp() {
         student = new Student(1L, "maryam", "mokhtai", "tehran");
+        studentRequest = new StudentRequest("maryam", "mokhtai", "tehran");
     }
 
     @SneakyThrows
@@ -68,10 +71,10 @@ public class StudentControllerTest {
     @SneakyThrows
     @Test
     void testCreateStudent() {
-        when(studentService.create(student)).thenReturn(student);
+        when(studentService.create(studentRequest)).thenReturn(student);
 
         mockMvc.perform(post(path)
-                        .content(new ObjectMapper().writeValueAsString(student))
+                        .content(new ObjectMapper().writeValueAsString(studentRequest))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -83,18 +86,18 @@ public class StudentControllerTest {
     @SneakyThrows
     @Test
     void testUpdateStudent(){
-        Student student1 = new Student(2L, "hami", "rahmai", "navan");
-        when(studentService.update(student1)).thenReturn(student1);
-        mockMvc.perform(put(path)
-                .content(new ObjectMapper().writeValueAsString(student1))
+
+        when(studentService.update(1L,studentRequest)).thenReturn(student);
+        mockMvc.perform(put(path+"/1")
+                .content(new ObjectMapper().writeValueAsString(studentRequest))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(student1.getId()))
-                .andExpect(jsonPath("$.firstName").value(student1.getFirstName()))
-                .andExpect(jsonPath("$.lastName").value(student1.getLastName()))
-                .andExpect(jsonPath("$.city").value(student1.getCity()));
+                .andExpect(jsonPath("$.id").value(student.getId()))
+                .andExpect(jsonPath("$.firstName").value(student.getFirstName()))
+                .andExpect(jsonPath("$.lastName").value(student.getLastName()))
+                .andExpect(jsonPath("$.city").value(student.getCity()));
     }
     @SneakyThrows
     @Test

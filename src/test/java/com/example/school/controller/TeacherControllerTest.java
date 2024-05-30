@@ -1,7 +1,8 @@
 package com.example.school.controller;
 
-import com.example.school.repository.model.Teacher;
+import com.example.school.repository.entity.Teacher;
 import com.example.school.service.TeacherService;
+import com.example.school.service.dto.TeacherRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.hamcrest.Matchers;
@@ -29,12 +30,14 @@ public class TeacherControllerTest {
     TeacherService teacherService;
     @Autowired
     MockMvc mockMvc;
+    TeacherRequest teacherRequest;
     Teacher teacher;
     String path = "/api/v1/teachers";
 
     @BeforeEach
     void setUp() {
         teacher = new Teacher(1l, "maryam", "mokhtari", 500.0);
+        teacherRequest = new TeacherRequest("maryam", "mokhtari", 500.0);
     }
 
     @SneakyThrows
@@ -64,10 +67,10 @@ public class TeacherControllerTest {
 
     @SneakyThrows
     @Test
-    void testCreateTEacher() {
-        when(teacherService.create(teacher)).thenReturn(teacher);
+    void testCreateTeacher() {
+        when(teacherService.create(teacherRequest)).thenReturn(teacher);
         mockMvc.perform(post(path)
-                        .content(new ObjectMapper().writeValueAsString(teacher))
+                        .content(new ObjectMapper().writeValueAsString(teacherRequest))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -78,20 +81,17 @@ public class TeacherControllerTest {
     @SneakyThrows
     @Test
     void testUpdateTeacher() {
-        Teacher teacher1 = new Teacher(2l, "hami", "rahmani", 550.0);
-        when(teacherService.update(teacher1)).thenReturn(teacher1);
-        mockMvc.perform(put(path)
-                        .content(new ObjectMapper().writeValueAsString(teacher1))
+        when(teacherService.update(1L,teacherRequest)).thenReturn(teacher);
+        mockMvc.perform(put(path+"/1")
+                        .content(new ObjectMapper().writeValueAsString(teacherRequest))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(teacher1.getId()))
-                .andExpect(jsonPath("$.firstName").value(teacher1.getFirstName()))
-                .andExpect(jsonPath("$.lastName").value(teacher1.getLastName()))
-                .andExpect(jsonPath("$.salary").value(teacher1.getSalary()));
-
-
+                .andExpect(jsonPath("$.id").value(teacher.getId()))
+                .andExpect(jsonPath("$.firstName").value(teacher.getFirstName()))
+                .andExpect(jsonPath("$.lastName").value(teacher.getLastName()))
+                .andExpect(jsonPath("$.salary").value(teacher.getSalary()));
     }
 
     @SneakyThrows

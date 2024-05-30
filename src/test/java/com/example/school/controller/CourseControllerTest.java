@@ -1,7 +1,8 @@
 package com.example.school.controller;
 
-import com.example.school.repository.model.Course;
+import com.example.school.repository.entity.Course;
 import com.example.school.service.CourseService;
+import com.example.school.service.dto.CourseRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,22 +30,27 @@ public class CourseControllerTest {
     @Autowired
     MockMvc mockMvc;
 
-    Course course;
+   CourseRequest courseRequest;
+   Course course;
+   Long requestId = 1L;
     String path = "/api/v1/courses";
 
     @BeforeEach
     void setUp() {
-        course = new Course(1L, "math", 10);
+        courseRequest = new CourseRequest("math", 10);
+        course = new Course(1L,"math", 10);
     }
+
 
     @SneakyThrows
     @Test
     public void testGetAll() {
-
-        Course course2 = new Course(2l, "chemistery", 23);
-        List<Course> courses = new ArrayList<>();
-        courses.add(course);
+        List<Course>courses=new ArrayList<>();
+        Course course1=new Course(1L,"math", 10);
+        Course course2=new Course(2L,"chemistery", 23);
+        courses.add(course1);
         courses.add(course2);
+
 
         when(courseService.getAll()).thenReturn(courses);
 
@@ -57,7 +63,7 @@ public class CourseControllerTest {
     @SneakyThrows
     @Test
     void testGetById() {
-        when(courseService.findById(course.getId())).thenReturn(course);
+        when(courseService.findById(requestId)).thenReturn(course);
         mockMvc.perform(get(path + "/{id}", course.getId()))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -68,11 +74,12 @@ public class CourseControllerTest {
     @SneakyThrows
     @Test
     void testCreateCourse() {
-        when(courseService.create(course)).thenReturn(course);
+
+        when(courseService.create(courseRequest)).thenReturn(course);
 
         mockMvc.perform(
                         post(path)
-                                .content(new ObjectMapper().writeValueAsString(course))
+                                .content(new ObjectMapper().writeValueAsString(courseRequest))
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -83,19 +90,18 @@ public class CourseControllerTest {
     @SneakyThrows
     @Test
     void testUpdateCourse(){
-        Course course2 = new Course(1l, "chemistery", 23);
-        when(courseService.update(course2)).thenReturn(course2);
+        when(courseService.update(1L,courseRequest)).thenReturn(course);
 
         mockMvc.perform(
-                 put(path)
-                .content(new ObjectMapper().writeValueAsString(course2))
+                 put(path+"/1")
+                .content(new ObjectMapper().writeValueAsString(courseRequest))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(course2.getId()))
-                .andExpect(jsonPath("$.name").value(course2.getName()))
-                .andExpect(jsonPath("$.capacity").value(course2.getCapacity()));
+                .andExpect(jsonPath("$.id").value(course.getId()))
+                .andExpect(jsonPath("$.name").value(course.getName()))
+                .andExpect(jsonPath("$.capacity").value(course.getCapacity()));
 
     }
     @SneakyThrows
