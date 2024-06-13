@@ -1,20 +1,22 @@
 package com.example.school.service;
 
+import com.example.school.exception.ResourceNotFoundException;
 import com.example.school.repository.CourseRepository;
 import com.example.school.repository.entity.Course;
 import com.example.school.service.dto.CourseRequest;
 import com.example.school.service.mapper.CourseMapper;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class CourseService {
 
 
+    private static final String COURSE_DOESN_T_EXIST = "Course doesn't exist";
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
 
@@ -28,8 +30,11 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-   public Course findById(Long id) {
-        return courseRepository.findById(id).get();
+    public Course findById(Long id) {
+        Optional<Course> course = courseRepository.findById(id);
+        if (course.isPresent())
+            return course.get();
+        throw new ResourceNotFoundException(COURSE_DOESN_T_EXIST);
     }
 
     public Course create(CourseRequest courseRequest) {
@@ -39,19 +44,17 @@ public class CourseService {
         return courseRepository.save(course);
     }
 
-    @SneakyThrows
     public Course update(Long id, CourseRequest courseRequest) {
-        if(!courseRepository.existsById(id))
-            throw new Exception("Course doesn't exist");
-        Course course= courseMapper.courseUpdateRequestToCourse(courseRequest,id);
+        if (!courseRepository.existsById(id))
+            throw new ResourceNotFoundException(COURSE_DOESN_T_EXIST);
+        Course course = courseMapper.courseUpdateRequestToCourse(courseRequest, id);
 //        course.setId(id);
         return courseRepository.save(course);
     }
 
-    @SneakyThrows
-    public void delete(Long  id) {
-        if(!courseRepository.existsById(id))
-            throw new Exception("Course doesn't exist");
+    public void delete(Long id) {
+        if (!courseRepository.existsById(id))
+            throw new ResourceNotFoundException(COURSE_DOESN_T_EXIST);
         courseRepository.deleteById(id);
     }
 }
