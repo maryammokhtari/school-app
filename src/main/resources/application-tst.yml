@@ -13,4 +13,4 @@ spring:
     console.enabled: true
 logging:
   level:
-    root: DEBUG
+    root: INFO

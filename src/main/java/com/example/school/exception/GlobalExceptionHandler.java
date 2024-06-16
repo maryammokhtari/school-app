@@ -1,5 +1,6 @@
 package com.example.school.exception;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
 
+@Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
@@ -47,6 +49,9 @@ public class GlobalExceptionHandler {
                 .timestamp(LocalDateTime.now())
                 .message("An unexpected error occurred. "+ exception.getMessage())
                 .build();
+
+        log.error(errorResponse.getMessage());
+
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
