@@ -16,9 +16,6 @@ import java.time.LocalDateTime;
 public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ResourceNotFoundException exception){
-//        ErrorResponse errorResponse= new ErrorResponse();
-//        errorResponse.setTimestamp();
-//        errorResponse.setMessage();
         ErrorResponse errorResponse=
                 ErrorResponse.builder()
                 .timestamp(LocalDateTime.now())

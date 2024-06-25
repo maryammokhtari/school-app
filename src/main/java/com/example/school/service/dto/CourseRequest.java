@@ -8,15 +8,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 
-@Data//baraye ine ke lombok khodesh getter,setter dorost kone va ma dige nanevisim
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class CourseRequest {
 
-    @NotBlank //یعنی ورودی اسم ما خالی نباشه
+    @NotBlank
     private String name;
-    @Min(5)//یعنی ظرفیت ما عددش از 5 کمتر نباشه
+    @Min(5)
     private Integer capacity;
 
 }

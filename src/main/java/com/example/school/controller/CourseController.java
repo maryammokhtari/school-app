@@ -14,7 +14,6 @@ import java.util.List;
 @RequestMapping("/api/v1/courses")
 public class CourseController {
     private final CourseService courseService;
-    //finalمیاد میگه کهابجکت ما که از جنس کورس سرویسه یه بار که ساخته شد دیگه تغییر نمیکنه
 
     @Autowired
     public CourseController(CourseService courseService) {
@@ -25,19 +24,14 @@ public class CourseController {
     public ResponseEntity<List<Course>> getAll() {
         return ResponseEntity.ok(courseService.getAll());
     }
-    //responseEntityبرای اینه که خروی مون رو استاندارد برگردونیم
 
     @GetMapping("/{id}")
     public ResponseEntity<Course> getById(@PathVariable Long id) {
-        //@pathVaribale یعنی در ادرس ورودی باید یه مولفه ی عددی از حنس لانگ باشه
         return ResponseEntity.ok(courseService.findById(id));
-        //responseEntity.okیعنی  کد200 برگردون و در بدنه اش اونی که داخله پرانتزه رو بذار
     }
 
     @PostMapping
     public ResponseEntity<Course> create(@RequestBody @Valid CourseRequest courseRequest) {
-        //@validبرای اینه که بیاد داده های ورودی رو ارزیابی کنه که مطابق با مدل های ما باشه
-        //@requestbodyمیگه انتظار داشته باش که در بدنه ی درخواست ورودی اطلاعاتی ارسال شده باشه
         return ResponseEntity.ok(courseService.create(courseRequest));
     }
 
@@ -45,7 +39,6 @@ public class CourseController {
     public ResponseEntity deleteById(@PathVariable Long id) {
         courseService.delete(id);
         return ResponseEntity.ok().build();
-        //.buildبرای اینه که جواب بدون بدنه اس و خطا نده
     }
 
     @PutMapping("/{id}")

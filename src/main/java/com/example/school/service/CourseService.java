@@ -22,12 +22,6 @@ public class CourseService {
     private final CourseRepository courseRepository;
     private final CourseMapper courseMapper;
 
-//    @Autowired
-//    public CourseService(CourseRepository courseRepository, CourseMapper courseMapper) {
-//        this.courseRepository = courseRepository;
-//        this.courseMapper = courseMapper;
-//    }
-
     public List<Course> getAll() {
         return courseRepository.findAll();
     }
@@ -52,7 +46,6 @@ public class CourseService {
         if (!courseRepository.existsById(id))
             throw new ResourceNotFoundException(COURSE_DOESN_T_EXIST);
         Course course = courseMapper.courseUpdateRequestToCourse(courseRequest, id);
-//        course.setId(id);
         return courseRepository.save(course);
     }
 

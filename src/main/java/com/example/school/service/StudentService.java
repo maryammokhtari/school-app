@@ -19,18 +19,13 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
 
-//    @Autowired --> instead of this we use lombok @RequiredArgsConstructor
-//    public StudentService(StudentRepository studentRepository){
-//        this.studentRepository= studentRepository;
-//    }
-
     public List<Student> getAll() {
         return studentRepository.findAll();
     }
 
     public Student findById(Long id) {
-        Optional<Student> student =  studentRepository.findById(id);
-        if(student.isPresent())
+        Optional<Student> student = studentRepository.findById(id);
+        if (student.isPresent())
             return student.get();
         throw new ResourceNotFoundException(STUDENT_DOESN_T_EXIST);
     }
