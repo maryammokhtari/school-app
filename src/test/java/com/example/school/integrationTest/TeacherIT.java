@@ -19,7 +19,7 @@ public class TeacherIT {
 
     @BeforeEach
     void setUp() {
-        teacher = new Teacher(1l, "maryam", "mokhtari", 500.0);
+        teacher = new Teacher(1l, "maryam", "mokhtari", 500.0,null);
     }
 
     @Test

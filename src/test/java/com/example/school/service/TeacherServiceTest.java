@@ -35,7 +35,7 @@ public class TeacherServiceTest {
 
     @BeforeEach
     void setUp() {
-        teacher = new Teacher(1L, "maryam", "mokhtari", 500.00);
+        teacher = new Teacher(1L, "maryam", "mokhtari", 500.00,null);
         teacherRequest = new TeacherRequest("maryam", "mokhtari", 500.00);
     }
 
@@ -80,9 +80,9 @@ public class TeacherServiceTest {
     @Test
     void testGetAllTeacher() {
         List<Teacher> list = new ArrayList<>();
-        Teacher teacher1 = new Teacher(2L, "hami", "rahmani", 200.00);
-        Teacher teacher2 = new Teacher(3L, "mahsa", "mokhtari", 200.00);
-        Teacher teacher3 = new Teacher(4L, "zahra", "abazari", 300.00);
+        Teacher teacher1 = new Teacher(2L, "hami", "rahmani", 200.00,null);
+        Teacher teacher2 = new Teacher(3L, "mahsa", "mokhtari", 200.00,null);
+        Teacher teacher3 = new Teacher(4L, "zahra", "abazari", 300.00,null);
         list.add(teacher1);
         list.add(teacher2);
         list.add(teacher3);

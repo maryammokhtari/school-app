@@ -36,7 +36,7 @@ public class CourseServiceTest {
 
     @BeforeEach
     void setUp() {
-        course = new Course(1L, "zaban", 7);
+        course = new Course(1L, "zaban", 7,null,null);
         courseRequest = new CourseRequest("zaban", 7);
     }
 
@@ -87,9 +87,9 @@ public class CourseServiceTest {
     @Test
     void testGetAllCourse() {
         List<Course> list = new ArrayList<>();
-        Course course1 = new Course(2L, "math", 6);
-        Course course2 = new Course(3L, "phisiks", 8);
-        Course course3 = new Course(4L, "chemistery", 10);
+        Course course1 = new Course(2L, "math", 6,null,null);
+        Course course2 = new Course(3L, "phisiks", 8,null,null);
+        Course course3 = new Course(4L, "cheminstery", 10,null,null);
         list.add(course1);
         list.add(course2);
         list.add(course3);

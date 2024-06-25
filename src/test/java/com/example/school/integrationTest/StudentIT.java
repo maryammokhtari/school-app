@@ -18,7 +18,7 @@ public class StudentIT {
 
     @BeforeEach
     void setUp() {
-        student = new Student(1L, "maryam", "mokhtai", "tehran");
+        student = new Student(1L, "maryam", "mokhtai", "tehran",null);
     }
 
     @Test

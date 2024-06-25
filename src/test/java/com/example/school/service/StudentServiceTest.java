@@ -34,7 +34,7 @@ public class StudentServiceTest {
 
     @BeforeEach
     void setUp() {
-        student = new Student(1L, "maryam", "mokhtarifar", "tehran");
+        student = new Student(1L, "maryam", "mokhtarifar", "tehran",null);
         studentRequest = new StudentRequest("maryam", "mokhtarifar", "tehran");
     }
 
@@ -76,9 +76,9 @@ public class StudentServiceTest {
     @Test
     void testGetAllStudent() {
         List<Student> list = new ArrayList<>();
-        Student student1 = new Student(2L, "hami", "rahmani", "navan");
-        Student student2 = new Student(3L, "mahsa", "mokhtri", "teharan");
-        Student student3 = new Student(4L, "zahra", "abazari", "tabriz");
+        Student student1 = new Student(2L, "hami", "rahmani", "navan",null);
+        Student student2 = new Student(3L, "mahsa", "mokhtri", "teharan",null);
+        Student student3 = new Student(4L, "zahra", "abazari", "tabriz",null);
         list.add(student1);
         list.add(student2);
         list.add(student3);

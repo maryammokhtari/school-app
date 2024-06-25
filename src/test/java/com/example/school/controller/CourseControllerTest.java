@@ -38,7 +38,7 @@ public class CourseControllerTest {
     @BeforeEach
     void setUp() {
         courseRequest = new CourseRequest("math", 10);
-        course = new Course(1L,"math", 10);
+        course = new Course(1L,"math", 10,null,null);
     }
 
 
@@ -46,8 +46,8 @@ public class CourseControllerTest {
     @Test
     public void testGetAll() {
         List<Course>courses=new ArrayList<>();
-        Course course1=new Course(1L,"math", 10);
-        Course course2=new Course(2L,"chemistery", 23);
+        Course course1=new Course(1L,"math", 10,null,null);
+        Course course2=new Course(2L,"chemistery", 23,null,null);
         courses.add(course1);
         courses.add(course2);
 

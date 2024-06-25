@@ -1,15 +1,14 @@
 package com.example.school.repository.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Set;
 
 @Data
 @Entity
@@ -27,4 +26,12 @@ public class Teacher {
     @Min(100)
     private Double salary;
 
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.PERSIST)
+    private Set<Course> courses;
+    //cascadeمیگه که هر اتفاقی برای پرند افتاد ه تاثیری رو فرزند که اینجا کئرس هست بیافته
+    //اگه cascade.allرو بنویسیم یعنی هذ اتفاقی برای پدر افتاد سر فرزند نیز اتفاق بیافتد .
+    //persistمیگه فقط دستور سیو پدر روی فرزند هم تاثیر بذاره
+
 }
+//one to many :teacher with course
+//

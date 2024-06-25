@@ -8,10 +8,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Set;
+
 
 @Data//baraye ine ke lombok khodesh getter,setter dorost kone va ma dige nanevisim
 @Entity// برای اینه که بگیم موارد زیر رو در دیتابیس به صورت یه جدول دربیاره
- @AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class Course {
@@ -25,4 +27,11 @@ public class Course {
     @Min(5)//یعنی ظرفیت ما عددش از 5 کمتر نباشه
     private Integer capacity;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
+
+    @ManyToMany(mappedBy ="courses")
+    private Set<Student> students;
 }
+//many to many: student with course

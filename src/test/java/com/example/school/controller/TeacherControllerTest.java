@@ -36,14 +36,14 @@ public class TeacherControllerTest {
 
     @BeforeEach
     void setUp() {
-        teacher = new Teacher(1l, "maryam", "mokhtari", 500.0);
+        teacher = new Teacher(1l, "maryam", "mokhtari", 500.0,null);
         teacherRequest = new TeacherRequest("maryam", "mokhtari", 500.0);
     }
 
     @SneakyThrows
     @Test
     public void testGetAll() {
-        Teacher teacher1 = new Teacher(2l, "hami", "rahmani", 550.0);
+        Teacher teacher1 = new Teacher(2l, "hami", "rahmani", 550.0, null);
         List<Teacher> teachers = new ArrayList<>();
         teachers.add(teacher);
         teachers.add(teacher1);
