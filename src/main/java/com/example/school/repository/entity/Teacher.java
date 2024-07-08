@@ -28,10 +28,5 @@ public class Teacher {
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.PERSIST)
     private Set<Course> courses;
-    //cascadeمیگه که هر اتفاقی برای پرند افتاد ه تاثیری رو فرزند که اینجا کئرس هست بیافته
-    //اگه cascade.allرو بنویسیم یعنی هذ اتفاقی برای پدر افتاد سر فرزند نیز اتفاق بیافتد .
-    //persistمیگه فقط دستور سیو پدر روی فرزند هم تاثیر بذاره
 
 }
-//one to many :teacher with course
-//

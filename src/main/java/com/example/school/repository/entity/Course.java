@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 import java.util.Set;
 
 
-@Data//baraye ine ke lombok khodesh getter,setter dorost kone va ma dige nanevisim
-@Entity// برای اینه که بگیم موارد زیر رو در دیتابیس به صورت یه جدول دربیاره
+@Data
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -20,11 +20,10 @@ public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //generatedvalueبرای اینه که ایدیها به صورت خودکار و یه دونه یه دونه اضافه بشن
     private Long id;
-    @NotBlank //یعنی ورودی اسم ما خالی نباشه
+    @NotBlank
     private String name;
-    @Min(5)//یعنی ظرفیت ما عددش از 5 کمتر نباشه
+    @Min(5)
     private Integer capacity;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,4 +33,3 @@ public class Course {
     @ManyToMany(mappedBy ="courses")
     private Set<Student> students;
 }
-//many to many: student with course
