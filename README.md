@@ -37,6 +37,14 @@ Setup and Installation
 
 `java -jar target/school-0.0.1-SNAPSHOT.jar`
 
+**Swagger:**
+
+You can find the restful Api endpoints in swagger: http://localhost:8080/swagger-ui/index.html#/
+
+**Actuator:**
+
+You can find the actuator endpoints here: http://localhost:8080/actuator/health
+
 **Configuration**
 
 The application uses different configuration files for various environments:

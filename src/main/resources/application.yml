@@ -13,4 +13,12 @@ spring:
     console.enabled: true
 logging:
   level:
-    root: DEBUG
+    root: Info
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+  endpoint:
+    health:
+      show-details: always
